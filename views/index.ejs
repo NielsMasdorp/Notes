@@ -14,82 +14,141 @@
 </head>
 <body ng-app="notes">
 	<nav ng-controller="NavCtrl">
-		<div class="nav-wrapper">
+		<div class="nav-wrapper teal">
 			<a href="#" class="brand-logo">Notes</a>
-			<ul id="nav-mobile" class="right hide-on-med-and-down">
+			<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+			<ul class="right hide-on-med-and-down">
+				<li ng-show="isLoggedIn()">{{ currentUser() }}</li>
+				<li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
+				<li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
+				<li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
+			</ul>
+			<ul class="side-nav" id="mobile-demo">
 				<li ng-show="isLoggedIn()">{{ currentUser() }}</li>
 				<li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
 				<li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
 				<li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
 			</ul>
 		</div>
-		</nav>
-	<div class="row">
-		<div class="col-md-6 col-md-offset-3">
-			<ui-view></ui-view>
+	</nav>
+	<div class="container">
+		<div class="row">
+			<div class="col s12">
+				<ui-view></ui-view>
+			</div>
 		</div>
 	</div>
 	<script type="text/ng-template" id="/home.html">
 		<div class="row">
-			<div class="col s12 m4" ng-repeat="note in notes">
-				<div class="card-panel teal">
+			<div class="col s12 ">
+				<h2 class="center-align">Your notes</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col s12 s12 m4 offset-m4">
+				<div class="card-panel black-text">
+					<div class="card-content black-text">
+						<span class="card-title">Add a new note</span>
+						<textarea class="materialize-textarea" ng-model="body"></textarea>
+					</div>
+					<div class="card-action">
+						<a class="teal-text" href ng-click="addNote()">ADD</a>
+					</div>
+					</div
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col s12 m3" ng-repeat="note in notes">
+				<div class="card-panel hoverable teal" style="min-height:200px">
 					<span class="white-text">{{note.body}}
 					</span>
 				</div>
-			</div>
-			<div class="row">
-				<form ng-submit="addNote()">
-					<input type="text" ng-model="body"></input>
-					<button type="submit">Add</button>
-				</form>
 			</div>
 		</div>
 	</script>
 	<script type="text/ng-template" id="/register.html">
 
-		<div ng-show="error">
-			<span>{{ error.message }}</span>
+		<div class="row">
+			<div class="col s12 m4 offset-m4">
+
+				<div class="card-panel red lighten-2 white-text" ng-show="error">
+					<span>{{ error.message }}</span>
+				</div>
+
+				<form ng-submit="register()">
+					<div class="row center-align">
+						<h3 class="bold">Register</h3>
+					</div>
+					<div class="row">
+						<div class="input-field col s12">
+							<input type="text"
+							id="username"
+							ng-model="user.username"></input>
+							<label for="username">Username</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="input-field col s12">
+							<input type="password"
+							id="password"
+							ng-model="user.password"></input>
+							<label for="password">Password</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col s8">
+							<a href="/#/login" class="teal-text regular">I already have an account</a>
+						</div>
+						<div class="col s4">
+							<button class="btn waves-effect waves-light" type="submit" name="action">Register
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
 		</div>
+	</script>
+		<script type="text/ng-template" id="/login.html">
+			<div class="row">
+				<div class="col s12 m4 offset-m4">
 
-		<form ng-submit="register()"
-		style="margin-top:30px;">
-		<h3>Register</h3>
+					<div class="card-panel red lighten-2 white-text" ng-show="error">
+						<span>{{ error.message }}</span>
+					</div>
 
-		<div>
-			<input type="text"
-			placeholder="Username"
-			ng-model="user.username"></input>
-		</div>
-		<div>
-			<input type="password"
-			placeholder="Password"
-			ng-model="user.password"></input>
-		</div>
-		<button type="submit">Register</button>
-	</form>
-</script>
-<script type="text/ng-template" id="/login.html">
-
-	<div ng-show="error">
-		<span>{{ error.message }}</span>
-	</div>
-
-	<form ng-submit="logIn()"
-	style="margin-top:30px;">
-	<h3>Log In</h3>
-
-	<div>
-		<input type="text"
-		placeholder="Username"
-		ng-model="user.username"></input>
-	</div>
-	<div>
-		<input type="password"
-		placeholder="Password"
-		ng-model="user.password"></input>
-	</div>
-	<button type="submit">Log In</button>
-</form>
-</script>
-</body>
-</html>
+					<form ng-submit="logIn()">
+						<div class="row center-align">
+							<h3 class="bold">Log In</h3>
+						</div>
+						<div class="row">
+							<div class="input-field col s12">
+								<input type="text"
+								id="username"
+								ng-model="user.username"></input>
+								<label for="username">Username</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s12">
+								<input type="password"
+								id="password"
+								ng-model="user.password"></input>
+								<label for="password">Password</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col s8">
+								<a href="/#/register" class="teal-text regular">I don't have an account</a>
+							</div>
+							<div class="col s4">
+								<button class="btn waves-effect waves-light" type="submit" name="action">Login
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</script>
+	</body>
+	</html>

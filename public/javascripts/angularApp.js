@@ -1,3 +1,5 @@
+$(".button-collapse").sideNav();
+
 var app = angular.module('notes', ['ui.router']);
 
 app.config([
@@ -12,7 +14,6 @@ app.config([
       controller: 'MainCtrl',
       resolve: {
         notesPromise: ['notes', function(notes){
-          console.log('getting notes in urlRouterProvider');
           return notes.getAll();
         }]
       }
@@ -120,6 +121,7 @@ app.controller('MainCtrl', [
 		$scope.notes = notes.notes;
 
 		$scope.addNote = function(){
+      console.log('adding note: ' + $scope.body)
 			if(!$scope.body || $scope.body === '') { return; }
 			notes.create({
         body: $scope.body
