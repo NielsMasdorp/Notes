@@ -1,5 +1,3 @@
-$(".button-collapse").sideNav();
-
 var app = angular.module('notes', ['ui.router']);
 
 app.config([
@@ -138,6 +136,10 @@ app.controller('AuthCtrl', [
     $scope.user = {};
 
     $scope.register = function(){
+      if(!$scope.user.username.length < 8 || $scope.user.password.length < 8) { 
+        $scope.error = { "message" : "Username and password must be longer than 8 characters"};
+        return; 
+      }
       auth.register($scope.user).error(function(error){
         $scope.error = error;
       }).then(function(){
