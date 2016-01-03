@@ -84,7 +84,15 @@
 				<div class="card hoverable yellow">
 					<div class="card-content grey-text">
 						<span class="card-title grey-text">{{note.title}}</span>
-						<p class="grey-text">{{note.body}}</p>
+						<div ng-if="note.noteType == 0">
+							<p class="grey-text">{{note.body}}</p>
+						</div>
+						<div ng-if="note.noteType == 1" ng-repeat="task in note.taskList">
+    						<p>
+      							<input class="grey" type="checkbox" id="{{ 'task-' + task._id }}" />
+      							<label for="{{ 'task-' + task._id }}">{{task.task}}</label>
+    						</p>	
+						</div>
 						<h6 class="light grey-text" am-time-ago="note.date"></h6>
 					</div>
 					<div class="card-action">
