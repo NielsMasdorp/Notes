@@ -124,28 +124,62 @@ app.controller('MainCtrl', [
 	'$scope', '$location', 'notes', 'auth',
 	function($scope, $location, notes, auth){
 
-    $scope.tasks = [{'id' : 1, 'task' : ''}];
+    $scope.newNote = {'type' : 0, 'title' : '', 'body' : '', 'tasks' : [{'id' : 0, 'task' : ''}]};
 
     var init = function() {
       //TODO: fix better way to retrieve notes
       notes.getAll();
       $scope.notes = notes.notes;
-      //for the tabs
+      //styling for the tabs
       $('ul.tabs').tabs();
       $('.indicator').css("background-color","#9E9E9E");
-
     };
     init();
 
+    $scope.addTask = function() {
+      $scope.newNote.tasks.push({'id' : $scope.newNote.tasks.length, 'task' : ''});
+    };
+
+    $scope.deleteTask = function(task) {
+      var index = $scope.newNote.tasks.indexOf(task);
+      if (index > -1) {
+          $scope.newNote.tasks.splice(index, 1);
+      }
+    };
+
+    $scope.changeNoteType = function(type){
+        $scope.newNote.type = type;
+        if (type === 0) {
+          $scope.newNote.tasks = [{'id' : 0, 'task' : ''}];
+        } else {
+          $scope.newNote.title = '';
+          $scope.newNote.body = '';
+        }
+    };
+
 		$scope.addNote = function(){
-      console.log('adding note: ' + $scope.body)
-			if(!$scope.body || $scope.body === '' || !$scope.title || $scope.title === '') { return; }
+      //check if new note is valid
+      if ($scope.newNote.type === 0) {
+			   if(!$scope.newNote.body || $scope.newNote.body === '' || !$scope.newNote.title || $scope.newNote.title === '') {
+          return; 
+        }
+        $scope.newNote.tasks = [];
+      } else {
+        if(($scope.newNote.tasks.length === 1 && $scope.newNote.tasks[0].task === '') || !$scope.newNote.title || $scope.newNote.title === '') {
+          return; 
+        }
+      }
+      //create node
 			notes.create({
-        title: $scope.title,
-        body: $scope.body
+        noteType: $scope.newNote.type,
+        title: $scope.newNote.title,
+        body: $scope.newNote.body,
+        taskList: $scope.newNote.tasks
       });
-      $scope.title = '';
-      $scope.body = '';
+      //reset values
+      $scope.newNote.title = '';
+      $scope.newNote.body = '';
+      $scope.newNote.tasks = [{'id' : 0, 'task' : ''}];
       Materialize.toast('Note added!', 4000);
     };
   }]);

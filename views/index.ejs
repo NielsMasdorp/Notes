@@ -41,27 +41,36 @@
 	</div>
 	<script type="text/ng-template" id="/home.html">
 		<div class="row" style="padding-top: 16px;">
-			<div class="col s12 s12 m4 offset-m4">
+			<div class="col s12 m4 offset-m4">
 				<div class="card black-text">
 					<div class="card-content black-text">
 						<span class="card-title grey-text">Add a new note</span>
 						<div class="row">
-    						<div class="col s12" style="padding-bottom: 16px;">
-      							<ul class="tabs">
-        							<li class="tab col s3"><a class="active" href="#normal-note"><i class="material-icons grey-text">mode_edit</i></a></li>
-        							<li class="tab col s3"><a href="#list-note"><i class="material-icons grey-text">list</i></a></li>
-      							</ul>
-    						</div>
-    						<div id="normal-note" class="col s12">
-    							<input placeholder="Title" ng-model="title" type="text">
-								<textarea class="materialize-textarea" placeholder="Content" ng-model="body"></textarea>
-    						</div>
-    						<div id="list-note" class="col s12">
-    							<div ng-repeat="task in tasks" id="task.id">
-    							 	<input placeholder="Write a task.." ng-model="task.task"/>
-    						 	</div>
-    						</div>
-  						</div>
+							<div class="col s12" style="padding-bottom: 16px;">
+								<ul class="tabs">
+									<li class="tab col s3"><a class="active" ng-click="changeNoteType(0)"
+									href="#normal-note"><i class="material-icons grey-text">mode_edit</i></a></li>
+									<li class="tab col s3"><a ng-click="changeNoteType(1)"
+									href="#list-note"><i class="material-icons grey-text">list</i></a></li>
+								</ul>
+							</div>
+							<div id="normal-note" class="col s12">
+								<input placeholder="Title" ng-model="newNote.title" type="text">
+								<textarea class="materialize-textarea" placeholder="Content" ng-model="newNote.body"></textarea>
+							</div>
+							<div id="list-note" class="col s12">
+								<input placeholder="Title" ng-model="newNote.title" type="text">
+								<div ng-repeat="task in newNote.tasks" ng-attr-id="{{ 'task-' + task.id }}">
+								<div class="input-field">
+         							<i href ng-if="$index > 0" ng-click="deleteTask(task)" class="material-icons prefix grey-text">delete</i>
+          							<input placeholder="Write a task.." ng-model="task.task"/>	
+        						</div>					
+								</div>
+								<div class="col s12 right-align">
+									<a href ng-click="addTask()" class="grey-text light">Add task</a>
+								</div>
+							</div>
+						</div>
 					</div>
 					<div class="card-action">
 						<a class="grey-text" href ng-click="addNote()">ADD NOTE</a>

@@ -1,11 +1,12 @@
 var mongoose = require('mongoose');
 
 var NotesSchema = new mongoose.Schema({
+  noteType: { type: Number, default: 0 },
   author: String,
   title: String,
   body: String,
-  color: { type: String, default: 'green' },
-  date: { type: Date, default: Date.now }
+  date: { type: Date, default: Date.now },
+  taskList: [{ 'id' : Number, 'task' : String, finished : { type: Boolean, default: false } }]
 });
 
 mongoose.model('Note', NotesSchema);

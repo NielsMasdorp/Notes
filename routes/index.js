@@ -21,9 +21,13 @@ router.get('/notes', auth, function(req, res, next) {
 });
 
 router.post('/notes', auth, function(req, res, next) {
-  var note = new Note(req.body, req.title);
-  note.title = req.title;
-  note.author = req.payload.username;
+  var note = new Note({ 
+    noteType : req.body.noteType,
+    author : req.payload.username,
+    title : req.body.title,
+    body : req.body.body,
+    taskList : req.body.taskList
+  });
 
   note.save(function(err, note){
     if(err){ return next(err); }
