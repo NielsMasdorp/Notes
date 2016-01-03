@@ -106,15 +106,21 @@ app.factory('notes', ['$http', 'auth', function($http, auth){
   o.getAll = function() {
     return $http.get('/notes', {
       headers: {Authorization: 'Bearer ' + auth.getToken()}
-    }).success(function(data){
-      angular.copy(data, o.notes);
     });
   };
   o.create = function(note) {
     return $http.post('/notes', note, {
       headers: {Authorization: 'Bearer ' + auth.getToken()}
-    }).success(function(data){
-      o.notes.push(data);
+    });
+  };
+  o.update = function(note) {
+    return $http.put('/notes', note, {
+      headers: {Authorization: 'Bearer ' + auth.getToken()}
+    });
+  };
+  o.delete = function(note) {
+    return $http.delete('/notes', note, {
+      headers: {Authorization: 'Bearer ' + auth.getToken()}
     });
   };
   return o;
@@ -128,8 +134,10 @@ app.controller('MainCtrl', [
 
     var init = function() {
       //TODO: fix better way to retrieve notes
-      notes.getAll();
-      $scope.notes = notes.notes;
+      notes.getAll().success(function(data){
+        angular.copy(data, notes.notes);
+        $scope.notes = notes.notes;
+      });;
       //styling for the tabs
       $('ul.tabs').tabs();
       $('.indicator').css("background-color","#9E9E9E");
@@ -175,12 +183,45 @@ app.controller('MainCtrl', [
         title: $scope.newNote.title,
         body: $scope.newNote.body,
         taskList: $scope.newNote.tasks
+      }).success(function(data){
+        notes.notes.push(data);
       });
       //reset values
       $scope.newNote.title = '';
       $scope.newNote.body = '';
       $scope.newNote.tasks = [{'id' : 0, 'task' : ''}];
       Materialize.toast('Note added!', 4000);
+    };
+
+    $scope.updateNote = function(note) {
+      notes.update(note).success(function(data){
+        //note is updated!
+      })
+      .error(function(data){
+        //remove note from list and populate again 
+        var index = notes.notes.indexOf(note);
+        if (index > -1) {
+          notes.notes.splice(index, 1);
+        }
+        notes.notes.push(data);
+        Materialize.toast('Something went wrong , try again later!', 4000);
+      });
+    };
+
+    $scope.deleteNote = function(note) {
+      notes.delete(note).success(function(data){
+        //note is deleted!
+        //remove note from list
+        var index = notes.notes.indexOf(note);
+        if (index > -1) {
+          notes.notes.splice(index, 1);
+        }
+        Materialize.toast('Note deleted!', 4000);
+      })
+      .error(function(data){
+        //Something went wrong while deleting note
+        Materialize.toast('Something went wrong , try again later!', 4000);
+      });
     };
   }]);
 
