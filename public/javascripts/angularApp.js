@@ -119,7 +119,7 @@ app.factory('notes', ['$http', 'auth', function($http, auth){
     });
   };
   o.deleteNote = function(note) {
-    return $http.delete('/notes?id=' + note._id, {
+    return $http.delete('/notes/' + note._id, {
       headers: {Authorization: 'Bearer ' + auth.getToken()}
     });
   };
@@ -130,8 +130,9 @@ app.controller('MainCtrl', [
 	'$scope', '$location', 'notes', 'auth',
 	function($scope, $location, notes, auth){
 
-    $scope.newNote = {'type' : 0, 'title' : '', 'body' : '', 'tasks' : [{'id' : 0, 'task' : ''}]};
+    $scope.newNote = {'type' : 0, 'title' : '', 'body' : '', 'category' : 0, 'tasks' : [{'id' : 0, 'task' : ''}]};
     $scope.loading = 1;
+    $scope.selectedCategory = 0;
 
     var init = function() {
       notes.getAll().success(function(data){
@@ -165,7 +166,12 @@ app.controller('MainCtrl', [
         }
     };
 
+    $scope.changeCategory = function(category) {
+        $scope.selectedCategory = category;
+    };
+
 		$scope.addNote = function(){
+      $scope.newNote.category = $scope.selectedCategory;
       //check if new note is valid
       if ($scope.newNote.type === 0) {
 			   if(!$scope.newNote.body || $scope.newNote.body === '' || !$scope.newNote.title || $scope.newNote.title === '') {
@@ -189,6 +195,7 @@ app.controller('MainCtrl', [
         noteType: $scope.newNote.type,
         title: $scope.newNote.title,
         body: $scope.newNote.body,
+        category: $scope.newNote.category,
         taskList: $scope.newNote.tasks
       }).success(function(data){
         notes.notes.push(data);

@@ -26,6 +26,7 @@ router.post('/notes', auth, function(req, res, next) {
     author : req.payload.username,
     title : req.body.title,
     body : req.body.body,
+    category : req.body.category,
     taskList : req.body.taskList
   });
 
@@ -57,9 +58,9 @@ router.put('/notes', auth, function(req, res, next) {
   });
 });
 
-router.delete('/notes', auth, function(req, res, next) {
+router.delete('/notes/:id', auth, function(req, res, next) {
 
- Note.where().findOneAndRemove(req.param.id, function(err) {
+  Note.findOneAndRemove({_id : req.params.id}, function(err) {
     if(err) { 
       return next(err); 
     } else {

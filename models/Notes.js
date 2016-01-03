@@ -5,6 +5,7 @@ var NotesSchema = new mongoose.Schema({
   author: String,
   title: String,
   body: String,
+  category: { type: Number, default: 0 },
   date: { type: Date, default: Date.now },
   taskList: [{ 'id' : Number, 'task' : String, finished : { type: Boolean, default: false } }]
 });
