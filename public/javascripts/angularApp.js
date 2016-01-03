@@ -134,7 +134,6 @@ app.controller('MainCtrl', [
     $scope.loading = 1;
 
     var init = function() {
-      //TODO: fix better way to retrieve notes
       notes.getAll().success(function(data){
         angular.copy(data, notes.notes);
         $scope.notes = notes.notes;
@@ -162,7 +161,6 @@ app.controller('MainCtrl', [
         if (type === 0) {
           $scope.newNote.tasks = [{'id' : 0, 'task' : ''}];
         } else {
-          $scope.newNote.title = '';
           $scope.newNote.body = '';
         }
     };
@@ -175,6 +173,13 @@ app.controller('MainCtrl', [
         }
         $scope.newNote.tasks = [];
       } else {
+        //remove empty tasks
+        $scope.newNote.tasks.forEach(function(task){
+            var index = $scope.newNote.tasks.indexOf(task);
+            if (index > 0 && task.task === '') {
+               $scope.newNote.tasks.splice(index, 1);
+            }
+        });
         if(($scope.newNote.tasks.length === 1 && $scope.newNote.tasks[0].task === '') || !$scope.newNote.title || $scope.newNote.title === '') {
           return; 
         }

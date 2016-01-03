@@ -65,12 +65,13 @@
 									href="#list-note"><i class="material-icons grey-text">list</i></a></li>
 								</ul>
 							</div>
-							<div id="normal-note" class="col s12">
+							<div class="col s12">
 								<input placeholder="Title" ng-model="newNote.title" type="text">
+							</div>
+							<div id="normal-note" class="col s12">
 								<textarea class="materialize-textarea" placeholder="Content" ng-model="newNote.body"></textarea>
 							</div>
 							<div id="list-note" class="col s12">
-								<input placeholder="Title" ng-model="newNote.title" type="text">
 								<div ng-repeat="task in newNote.tasks" ng-attr-id="{{ 'task-' + task.id }}">
 								<div class="input-field">
          							<i href ng-if="$index > 0" ng-click="deleteTask(task)" class="material-icons prefix grey-text">delete</i>
@@ -96,7 +97,7 @@
 					<div class="card-content grey-text">
 						<span class="card-title grey-text">{{note.title}}</span>
 						<div ng-if="note.noteType == 0">
-							<p class="grey-text">{{note.body}}</p>
+							<p class="grey-text note-body">{{note.body}}</p>
 						</div>
 						<div ng-if="note.noteType == 1" ng-repeat="task in note.taskList">
     						<p class="grey-text">

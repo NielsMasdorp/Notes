@@ -2,6 +2,10 @@
 	padding-left: 16px;
 }
 
+.note-body {
+	word-wrap:break-word;
+}
+
 .preloader-wrapper {
 	position: absolute;
 	top: 50%;
