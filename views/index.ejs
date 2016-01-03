@@ -33,25 +33,23 @@
 		</div>
 	</nav>
 	<div class="container">
-		<div class="row">
-			<div class="col s12">
-				<ui-view></ui-view>
-			</div>
-		</div>
+		<ui-view></ui-view>
 	</div>
 	<script type="text/ng-template" id="/home.html">
 		<div ng-show="loading > 0" class="preloader-wrapper active">
     		<div class="spinner-layer spinner-red-only">
       			<div class="circle-clipper left">
         			<div class="circle"></div>
-      			</div><div class="gap-patch">
-        	<div class="circle"></div>
-      		</div><div class="circle-clipper right">
-        		<div class="circle"></div>
-      		</div>
+      			</div>
+      			<div class="gap-patch">
+        	    	<div class="circle"></div>
+      			</div>
+      			<div class="circle-clipper right">
+        			<div class="circle"></div>
+      			</div>
     		</div>
   		</div>
-		<div class="row" ng-show="loading == 0" style="padding-top: 16px;">
+  		<div class="row add-note-row" ng-show="loading == 0">
 			<div class="col s12 m4 offset-m4">
 				<div class="card black-text">
 					<div class="card-content black-text">
@@ -87,13 +85,12 @@
 					<div class="card-action">
 						<a class="grey-text" href ng-click="addNote()">ADD NOTE</a>
 					</div>
-					</div
 				</div>
 			</div>
 		</div>
 		<div class="row" ng-show="loading == 0">
 			<div class="col s12 m8 offset-m2">
-			<ul class="tabs">
+				<ul class="tabs">
 					<li class="tab col s3"><a href class="active grey-text" ng-click="changeCategory(0)">Personal</a></li>
 					<li class="tab col s3"><a href class="grey-text" ng-click="changeCategory(1)">Groceries</a></li>
 					<li class="tab col s3"><a href class="grey-text" ng-click="changeCategory(2)">Sport</a></li>
@@ -101,19 +98,17 @@
 					<li class="tab col s3"><a href class="grey-text" ng-click="changeCategory(4)">Money</a></li>
 				</ul>
 			</div>
-			<div class="col s12 m3" ng-repeat="note in filtered = ( notes | orderBy:'-date' | filter: {category : selectedCategory} )">
-				<div class="card hoverable yellow">
+		</div>
+  		<div class="row" ng-show="loading == 0">
+    		<div class="col s12 m4" ng-repeat="note in filtered = ( notes | orderBy:'-date' | filter: {category : selectedCategory} )">
+       			<div class="card hoverable yellow" >
 					<div class="card-content grey-text">
 						<span class="card-title grey-text">{{note.title}}</span>
-						<div ng-if="note.noteType == 0">
-							<p class="grey-text note-body">{{note.body}}</p>
-						</div>
-						<div ng-if="note.noteType == 1" ng-repeat="task in note.taskList">
-    						<p class="grey-text">
-      							<input ng-model="task.finished" ng-change="updateNote(note)" type="checkbox" id="{{ 'task-' + task._id }}" />
-      							<label for="{{ 'task-' + task._id }}">{{task.task}}</label>
-    						</p>	
-						</div>
+						<p ng-if="note.noteType == 0" class="grey-text note-body">{{note.body}}</p>
+    					<p ng-if="note.noteType == 1" ng-repeat="task in note.taskList" class="grey-text">
+      						<input ng-model="task.finished" ng-change="updateNote(note)" type="checkbox" id="{{ 'task-' + task._id }}" />
+      						<label for="{{ 'task-' + task._id }}">{{task.task}}</label>
+    					</p>	
 						<h6 class="light grey-text" am-time-ago="note.date"></h6>
 					</div>
 					<div class="card-action">
@@ -122,24 +117,12 @@
 						<a class="grey-text" href><i class="material-icons">mail</i></a>
 						<a class="grey-text" href><i class="material-icons">done</i></a>
 						<a class="grey-text" href ng-click="deleteNote(note)"><i class="material-icons">delete</i></a>
-  						<ul id='colorDropdown' class='dropdown-content'>
-    						<li><a href="#!">one</a></li>
-    						<li><a href="#!">two</a></li>
-    						<li class="divider"></li>
-    						<li><a href="#!">three</a></li>
-  						</ul>
 					</div>
-				</div>
-			</div>
-			<div class="col s12 m8 offset-m2" ng-show="filtered.length == 0">
-				<div class="card-panel hoverable green lighten-2 white-text">
-					No notes in this category, go add one!
-				</div>
-			</div>
-		</div>
+				</div>    
+    		</div>
+    	</div>
 	</script>
 	<script type="text/ng-template" id="/register.html">
-
 		<div class="row">
 			<div class="col s12 m4 offset-m4">
 

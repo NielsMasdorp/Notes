@@ -1,9 +1,13 @@
 #brand {
-	padding-left: 16px;
+	padding-left: 32px;
 }
 
 .note-body {
 	word-wrap:break-word;
+}
+
+.add-note-row {
+  padding-top: 32px;
 }
 
 .preloader-wrapper {
@@ -11,6 +15,37 @@
 	top: 50%;
     left: 50%;
     z-index: 1000;
+}
+
+.cards-container {
+  column-break-inside: avoid;
+}
+.cards-container .card {
+  display: inline-block;
+  overflow: visible;
+}
+
+@media only screen and (max-width: 600px) {
+  .cards-container {
+    -webkit-column-count: 1;
+    -moz-column-count: 1;
+    column-count: 1;
+  }
+}
+@media only screen and (min-width: 601px) {
+  .cards-container {
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+    column-count: 2;
+  }
+}
+
+@media only screen and (min-width: 993px) {
+  .cards-container {
+    -webkit-column-count: 3;
+    -moz-column-count: 3;
+    column-count: 3;
+  }
 }
 
 @media only screen and (max-width: 992px) {
