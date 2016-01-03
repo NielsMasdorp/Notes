@@ -246,6 +246,14 @@ app.controller('MainCtrl', [
       });
     };
 
+    $scope.editNote = function(note) {
+      if (note.editing) {
+        note.editing = false;
+      } else  {
+        note.editing = true;
+      }
+    };
+
     $scope.getNoteClass = function(note) {
       var color = '';
       switch (note.color) {
