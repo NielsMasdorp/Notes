@@ -140,8 +140,6 @@
 		<div class="row top-row">
 			<div class="col s12 m8 offset-m2 l4 offset-l4 card-panel">
 
-			
-
 				<form ng-submit="register()">
 					<div class="row center-align">
 						<h3 class="bold grey-text text-darken-2">Register</h3>
@@ -160,6 +158,14 @@
 							id="password"
 							ng-model="user.password"></input>
 							<label for="password">Password</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="input-field col s12">
+							<input type="password"
+							id="passwordRepeat"
+							ng-model="user.passwordRepeat"></input>
+							<label for="passwordRepeat">Repeat password</label>
 						</div>
 					</div>
 					<div class="row" ng-show="error">

@@ -71,14 +71,15 @@ router.delete('/notes/:id', auth, function(req, res, next) {
 });
 
 router.post('/register', function(req, res, next){
-  if(!req.body.username || !req.body.password){
+  if(!req.body.username || !req.body.password || !req.body.passwordRepeat){
     return res.status(400).json({message: 'Please fill out all fields'});
+  }
+  if(req.body.password !== req.body.passwordRepeat) {
+    return res.status(400).json({message: 'Passwords do not match'});
   }
 
   var user = new User();
-
   user.username = req.body.username;
-
   user.setPassword(req.body.password)
 
   user.save(function (err){

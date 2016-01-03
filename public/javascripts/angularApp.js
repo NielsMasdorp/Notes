@@ -284,8 +284,12 @@ app.controller('AuthCtrl', [
     $scope.user = {};
 
     $scope.register = function(){
-      if(!$scope.user.username.length < 8 || $scope.user.password.length < 8) { 
+      if($scope.user.username.length < 8 || $scope.user.password.length < 8) { 
         $scope.error = { "message" : "Username and password must be longer than 8 characters"};
+        return; 
+      }
+      if($scope.user.password !== $scope.user.passwordRepeat) { 
+        $scope.error = { "message" : "Passwords do not match"};
         return; 
       }
       auth.register($scope.user).error(function(error){
