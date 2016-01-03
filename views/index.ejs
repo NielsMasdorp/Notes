@@ -16,19 +16,19 @@
 <body ng-app="notes">
 	<nav ng-controller="NavCtrl">
 		<div class="nav-wrapper yellow">
-			<a href id="brand" class="brand-logo grey-text">Notes</a>
-			<a href="#" data-activates="mobile-demo" class="button-collapse"><i id="hamburger" class="material-icons grey-text">menu</i></a>
+			<a href id="brand" class="brand-logo grey-text text-darken-2">Notes</a>
+			<a href="#" data-activates="mobile-demo" class="button-collapse"><i id="hamburger" class="material-icons grey-text text-darken-2">menu</i></a>
 			<ul class="right hide-on-med-and-down">
-				<li ng-show="isLoggedIn()"><a href class="grey-text">Logged in as: {{ currentUser() }}</a></li>
-				<li ng-show="isLoggedIn()"><a href class="grey-text" ng-click="logOut()">Log out</a></li>
-				<li ng-hide="isLoggedIn()"><a href="/#/login" class="grey-text">Log in</a></li>
-				<li ng-hide="isLoggedIn()"><a href="/#/register" class="grey-text">Register</a></li>
+				<li ng-show="isLoggedIn()"><a href class="grey-text text-darken-2">Logged in as: {{ currentUser() }}</a></li>
+				<li ng-show="isLoggedIn()"><a href class="grey-text text-darken-2" ng-click="logOut()">Log out</a></li>
+				<li ng-hide="isLoggedIn()"><a href="/#/login" class="grey-text text-darken-2">Log in</a></li>
+				<li ng-hide="isLoggedIn()"><a href="/#/register" class="grey-text text-darken-2">Register</a></li>
 			</ul>
 			<ul class="side-nav" id="mobile-demo">
-				<li ng-show="isLoggedIn()"><a href class="grey-text">Logged in as: {{ currentUser() }}</a></li>
-				<li ng-show="isLoggedIn()"><a href="" class="grey-text" ng-click="logOut()">Log out</a></li>
-				<li ng-hide="isLoggedIn()"><a href="/#/login" class="grey-text">Log in</a></li>
-				<li ng-hide="isLoggedIn()"><a href="/#/register" class="grey-text">Register</a></li>
+				<li ng-show="isLoggedIn()"><a href class="grey-text text-darken-2">Logged in as: {{ currentUser() }}</a></li>
+				<li ng-show="isLoggedIn()"><a href="" class="grey-text text-darken-2" ng-click="logOut()">Log out</a></li>
+				<li ng-hide="isLoggedIn()"><a href="/#/login" class="grey-text text-darken-2">Log in</a></li>
+				<li ng-hide="isLoggedIn()"><a href="/#/register" class="grey-text text-darken-2">Register</a></li>
 			</ul>
 		</div>
 	</nav>
@@ -50,17 +50,17 @@
     		</div>
   		</div>
   		<div class="row add-note-row" ng-show="loading == 0">
-			<div class="col s12 m4 offset-m4">
+			<div class="col s12 m8 offset-m2 l4 offset-l4">
 				<div class="card black-text">
 					<div class="card-content black-text">
-						<span class="card-title grey-text">Add a new note</span>
+						<span class="card-title grey-text text-darken-2">Add a new note</span>
 						<div class="row">
 							<div class="col s12" style="padding-bottom: 16px;">
 								<ul class="tabs">
 									<li class="tab col s3"><a class="active" ng-click="changeNoteType(0)"
-									href="#normal-note"><i class="material-icons grey-text">mode_edit</i></a></li>
+									href="#normal-note"><i class="material-icons grey-text text-darken-2">mode_edit</i></a></li>
 									<li class="tab col s3"><a ng-click="changeNoteType(1)"
-									href="#list-note"><i class="material-icons grey-text">list</i></a></li>
+									href="#list-note"><i class="material-icons grey-text text-darken-2">list</i></a></li>
 								</ul>
 							</div>
 							<div class="col s12">
@@ -72,54 +72,68 @@
 							<div id="list-note" class="col s12">
 								<div ng-repeat="task in newNote.tasks" ng-attr-id="{{ 'task-' + task.id }}">
 								<div class="input-field">
-         							<i href ng-if="$index > 0" ng-click="deleteTask(task)" class="material-icons prefix grey-text">delete</i>
+         							<i href ng-if="$index > 0" ng-click="deleteTask(task)" class="material-icons prefix grey-text text-darken-2">delete</i>
           							<input placeholder="Write a task.." ng-model="task.task"/>	
         						</div>					
 								</div>
 								<div class="col s12 right-align">
-									<a href ng-click="addTask()" class="grey-text light">Add task</a>
+									<a href ng-click="addTask()" class="grey-text text-darken-2 light">Add task</a>
 								</div>
 							</div>
 						</div>
+						<div class="center-align">
+							<a class="btn-floating yellow lighten-3" ng-click="newNote.color = 0"><i ng-show="newNote.color === 0" class="material-icons">done</i></a>
+							<a class="btn-floating green lighten-3" ng-click="newNote.color = 1"><i ng-show="newNote.color === 1" class="material-icons">done</i></a>
+							<a class="btn-floating blue lighten-3" ng-click="newNote.color = 2"><i ng-show="newNote.color === 2" class="material-icons">done</i></a>
+							<a class="btn-floating red lighten-3" ng-click="newNote.color = 3"><i ng-show="newNote.color === 3" class="material-icons">done</i></a>
+							<a class="btn-floating indigo lighten-3" ng-click="newNote.color = 4"><i ng-show="newNote.color === 4" class="material-icons">done</i></a>
+							<a class="btn-floating purple lighten-3" ng-click="newNote.color = 5"><i ng-show="newNote.color === 5" class="material-icons">done</i></a>
+							<a class="btn-floating teal lighten-3" ng-click="newNote.color = 6"><i ng-show="selectedColor === 6" class="material-icons">done</i></a>
+						</div>
 					</div>
 					<div class="card-action">
-						<a class="grey-text" href ng-click="addNote()">ADD NOTE</a>
+						<a class="grey-text text-darken-2" href ng-click="addNote()">ADD NOTE</a>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="row" ng-show="loading == 0">
-			<div class="col s12 m8 offset-m2">
+			<div class="col s12 l8 offset-l2">
 				<ul class="tabs">
-					<li class="tab col s3"><a href class="active grey-text" ng-click="changeCategory(0)">Personal</a></li>
-					<li class="tab col s3"><a href class="grey-text" ng-click="changeCategory(1)">Groceries</a></li>
-					<li class="tab col s3"><a href class="grey-text" ng-click="changeCategory(2)">Sport</a></li>
-					<li class="tab col s3"><a href class="grey-text" ng-click="changeCategory(3)">Work</a></li>
-					<li class="tab col s3"><a href class="grey-text" ng-click="changeCategory(4)">Money</a></li>
+					<li class="tab col s3"><a href class="active grey-text text-darken-2" ng-click="selectedCategory = 0">Personal</a></li>
+					<li class="tab col s3"><a href class="grey-text text-darken-2" ng-click="selectedCategory = 1">Groceries</a></li>
+					<li class="tab col s3"><a href class="grey-text text-darken-2" ng-click="selectedCategory = 2">Sport</a></li>
+					<li class="tab col s3"><a href class="grey-text text-darken-2" ng-click="selectedCategory = 3">Work</a></li>
+					<li class="tab col s3"><a href class="grey-text text-darken-2" ng-click="selectedCategory = 4">Money</a></li>
 				</ul>
 			</div>
 		</div>
   		<div class="row" ng-show="loading == 0">
-    		<div class="col s12 m4" ng-repeat="note in filtered = ( notes | orderBy:'-date' | filter: {category : selectedCategory} )">
-       			<div class="card hoverable yellow" >
-					<div class="card-content grey-text">
-						<span class="card-title grey-text">{{note.title}}</span>
-						<p ng-if="note.noteType == 0" class="grey-text note-body">{{note.body}}</p>
-    					<p ng-if="note.noteType == 1" ng-repeat="task in note.taskList" class="grey-text">
+    		<div class="col s12 m6 l4" ng-repeat="note in filtered = ( notes | orderBy:'-date' | filter: {category : selectedCategory} )">
+       			<div ng-class="getNoteClass(note)" >
+					<div class="card-content">
+						<span class="card-title grey-text text-darken-2">{{note.title}}</span>
+						<p ng-if="note.noteType == 0" class="grey-text text-darken-2 note-body">{{note.body}}</p>
+    					<p ng-if="note.noteType == 1" ng-repeat="task in note.taskList" class="grey-text text-darken-2">
       						<input ng-model="task.finished" ng-change="updateNote(note)" type="checkbox" id="{{ 'task-' + task._id }}" />
       						<label for="{{ 'task-' + task._id }}">{{task.task}}</label>
     					</p>	
-						<h6 class="light grey-text" am-time-ago="note.date"></h6>
+						<h6 class="light grey-text text-darken-2" am-time-ago="note.date"></h6>
 					</div>
 					<div class="card-action">
-						<a class="grey-text" href><i class="material-icons">mode_edit</i></a>
-						<a class="grey-text dropdown-button" href><i class="material-icons">invert_colors</i></a>
-						<a class="grey-text" href><i class="material-icons">mail</i></a>
-						<a class="grey-text" href><i class="material-icons">done</i></a>
-						<a class="grey-text" href ng-click="deleteNote(note)"><i class="material-icons">delete</i></a>
+						<a class="grey-text text-darken-2" href><i class="material-icons">mode_edit</i></a>
+						<a class="grey-text text-darken-2" href><i class="material-icons">invert_colors</i></a>
+						<a class="grey-text text-darken-2" href><i class="material-icons">mail</i></a>
+						<a class="grey-text text-darken-2" href><i class="material-icons">done</i></a>
+						<a class="grey-text text-darken-2" href ng-click="deleteNote(note)"><i class="material-icons">delete</i></a>
 					</div>
 				</div>    
     		</div>
+    		<div class="col s12 m12 l8 offset-l2" ng-show="filtered.length == 0">
+				<div class="card-panel green lighten-2 white-text">
+					Go ahead, add your first note!
+				</div>
+			</div>
     	</div>
 	</script>
 	<script type="text/ng-template" id="/register.html">
@@ -132,7 +146,7 @@
 
 				<form ng-submit="register()">
 					<div class="row center-align">
-						<h3 class="bold">Register</h3>
+						<h3 class="bold grey-text text-darken-2">Register</h3>
 					</div>
 					<div class="row">
 						<div class="input-field col s12">
@@ -152,7 +166,7 @@
 					</div>
 					<div class="row">
 						<div class="col s8">
-							<a href="/#/login" class="grey-text regular">I already have an account</a>
+							<a href="/#/login" class="grey-text text-darken-2 regular">I already have an account</a>
 						</div>
 						<div class="col s4">
 							<button class="btn waves-effect waves-light" type="submit" name="action">Done
@@ -173,7 +187,7 @@
 
 				<form ng-submit="logIn()">
 					<div class="row center-align">
-						<h3 class="bold">Log In</h3>
+						<h3 class="grey-text text-darken-2 bold">Log In</h3>
 					</div>
 					<div class="row">
 						<div class="input-field col s12">
@@ -193,7 +207,7 @@
 					</div>
 					<div class="row">
 						<div class="col s8">
-							<a href="/#/register" class="grey-text regular">I do not have an account</a>
+							<a href="/#/register" class="grey-text text-darken-2 regular">I do not have an account</a>
 						</div>
 						<div class="col s4">
 							<button class="btn waves-effect waves-light" type="submit" name="action">Login

@@ -27,6 +27,7 @@ router.post('/notes', auth, function(req, res, next) {
     title : req.body.title,
     body : req.body.body,
     category : req.body.category,
+    color : req.body.color,
     taskList : req.body.taskList
   });
 

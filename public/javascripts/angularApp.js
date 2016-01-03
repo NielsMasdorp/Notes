@@ -130,9 +130,20 @@ app.controller('MainCtrl', [
 	'$scope', '$location', 'notes', 'auth',
 	function($scope, $location, notes, auth){
 
-    $scope.newNote = {'type' : 0, 'title' : '', 'body' : '', 'category' : 0, 'tasks' : [{'id' : 0, 'task' : ''}]};
-    $scope.loading = 1;
+    //blank note object for creation
+    $scope.newNote = {
+      'type' : 0, 
+      'title' : '', 
+      'body' : '', 
+      'category' : 0, 
+      'color' : 0, 
+      'tasks' : [{
+        'id' : 0, 
+        'task' : ''
+      }]
+    };
     $scope.selectedCategory = 0;
+    $scope.loading = 1;
 
     var init = function() {
       notes.getAll().success(function(data){
@@ -142,7 +153,7 @@ app.controller('MainCtrl', [
       });;
       //styling for the tabs
       $('ul.tabs').tabs();
-      $('.indicator').css("background-color","#9E9E9E");
+      $('.indicator').css("background-color","#616161");
     };
     init();
 
@@ -164,10 +175,6 @@ app.controller('MainCtrl', [
         } else {
           $scope.newNote.body = '';
         }
-    };
-
-    $scope.changeCategory = function(category) {
-        $scope.selectedCategory = category;
     };
 
 		$scope.addNote = function(){
@@ -196,6 +203,7 @@ app.controller('MainCtrl', [
         title: $scope.newNote.title,
         body: $scope.newNote.body,
         category: $scope.newNote.category,
+        color: $scope.newNote.color,
         taskList: $scope.newNote.tasks
       }).success(function(data){
         notes.notes.push(data);
@@ -203,6 +211,7 @@ app.controller('MainCtrl', [
       //reset values
       $scope.newNote.title = '';
       $scope.newNote.body = '';
+      $scope.newNote.color = 0;
       $scope.newNote.tasks = [{'id' : 0, 'task' : ''}];
       Materialize.toast('Note added!', 4000);
     };
@@ -236,6 +245,35 @@ app.controller('MainCtrl', [
         Materialize.toast('Something went wrong , try again later!', 4000);
       });
     };
+
+    $scope.getNoteClass = function(note) {
+      var color = '';
+      switch (note.color) {
+        case 0:
+          color = 'yellow lighten-3';
+          break;
+        case 1:
+          color = 'green lighten-3';
+          break;
+        case 2:
+          color = 'blue lighten-3';
+          break;
+        case 3:
+          color = 'red lighten-3';
+          break;
+        case 4:
+          color = 'indigo lighten-3';
+          break;
+        case 5:
+          color = 'purple lighten-3';
+          break;
+        case 6:
+          color = 'teal lighten-3';
+          break;
+      }
+      return 'card hoverable ' + color;
+    };
+
   }]);
 
 app.controller('AuthCtrl', [
