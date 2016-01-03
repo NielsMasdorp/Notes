@@ -6,8 +6,12 @@
 	word-wrap:break-word;
 }
 
-.add-note-row {
+.top-row {
   padding-top: 32px;
+}
+
+.prefix {
+	cursor: pointer;
 }
 
 .preloader-wrapper {

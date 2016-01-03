@@ -15,7 +15,7 @@
 </head>
 <body ng-app="notes">
 	<nav ng-controller="NavCtrl">
-		<div class="nav-wrapper yellow">
+		<div class="nav-wrapper yellow lighten-2">
 			<a href id="brand" class="brand-logo grey-text text-darken-2">Notes</a>
 			<a href="#" data-activates="mobile-demo" class="button-collapse"><i id="hamburger" class="material-icons grey-text text-darken-2">menu</i></a>
 			<ul class="right hide-on-med-and-down">
@@ -49,7 +49,7 @@
       			</div>
     		</div>
   		</div>
-  		<div class="row add-note-row" ng-show="loading == 0">
+  		<div class="row top-row" ng-show="loading == 0">
 			<div class="col s12 m8 offset-m2 l4 offset-l4">
 				<div class="card black-text">
 					<div class="card-content black-text">
@@ -88,7 +88,7 @@
 							<a class="btn-floating red lighten-3" ng-click="newNote.color = 3"><i ng-show="newNote.color === 3" class="material-icons">done</i></a>
 							<a class="btn-floating indigo lighten-3" ng-click="newNote.color = 4"><i ng-show="newNote.color === 4" class="material-icons">done</i></a>
 							<a class="btn-floating purple lighten-3" ng-click="newNote.color = 5"><i ng-show="newNote.color === 5" class="material-icons">done</i></a>
-							<a class="btn-floating teal lighten-3" ng-click="newNote.color = 6"><i ng-show="selectedColor === 6" class="material-icons">done</i></a>
+							<a class="btn-floating teal lighten-3" ng-click="newNote.color = 6"><i ng-show="newNote.color === 6" class="material-icons">done</i></a>
 						</div>
 					</div>
 					<div class="card-action">
@@ -116,7 +116,7 @@
 						<p ng-if="note.noteType == 0" class="grey-text text-darken-2 note-body">{{note.body}}</p>
     					<p ng-if="note.noteType == 1" ng-repeat="task in note.taskList" class="grey-text text-darken-2">
       						<input ng-model="task.finished" ng-change="updateNote(note)" type="checkbox" id="{{ 'task-' + task._id }}" />
-      						<label for="{{ 'task-' + task._id }}">{{task.task}}</label>
+      						<label class="grey-text text-darken-2" for="{{ 'task-' + task._id }}">{{task.task}}</label>
     					</p>	
 						<h6 class="light grey-text text-darken-2" am-time-ago="note.date"></h6>
 					</div>
@@ -137,12 +137,10 @@
     	</div>
 	</script>
 	<script type="text/ng-template" id="/register.html">
-		<div class="row">
-			<div class="col s12 m4 offset-m4">
+		<div class="row top-row">
+			<div class="col s12 m8 offset-m2 l4 offset-l4 card-panel">
 
-				<div class="card-panel red lighten-2 white-text" ng-show="error">
-					<span>{{ error.message }}</span>
-				</div>
+			
 
 				<form ng-submit="register()">
 					<div class="row center-align">
@@ -164,13 +162,22 @@
 							<label for="password">Password</label>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col s8">
-							<a href="/#/login" class="grey-text text-darken-2 regular">I already have an account</a>
+					<div class="row" ng-show="error">
+						<div class="col s12 center-align">
+							<div class="card-panel red lighten-2 white-text" >
+								<span>{{ error.message }}</span>
+							</div>
 						</div>
-						<div class="col s4">
-							<button class="btn waves-effect waves-light" type="submit" name="action">Done
+					</div>
+					<div class="row">
+						<div class="col s12 right-align">
+							<button class="btn waves-effect waves-light" type="submit" name="action">Register
 							</button>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col s12 center-align">
+							<a href="/#/login" class="teal-text regular">I already have an account</a>
 						</div>
 					</div>
 				</form>
@@ -178,12 +185,8 @@
 		</div>
 	</script>
 	<script type="text/ng-template" id="/login.html">
-		<div class="row">
-			<div class="col s12 m4 offset-m4">
-
-				<div class="card-panel red lighten-2 white-text" ng-show="error">
-					<span>{{ error.message }}</span>
-				</div>
+		<div class="row top-row">
+			<div class="col s12 m8 offset-m2 l4 offset-l4 card-panel">
 
 				<form ng-submit="logIn()">
 					<div class="row center-align">
@@ -205,13 +208,22 @@
 							<label for="password">Password</label>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col s8">
-							<a href="/#/register" class="grey-text text-darken-2 regular">I do not have an account</a>
+					<div class="row" ng-show="error">
+						<div class="col s12 center-align">
+							<div class="card-panel red lighten-2 white-text" >
+								<span>{{ error.message }}</span>
+							</div>
 						</div>
-						<div class="col s4">
+					</div>
+					<div class="row">
+						<div class="col s12 right-align">
 							<button class="btn waves-effect waves-light" type="submit" name="action">Login
 							</button>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col s12 center-align">
+							<a href="/#/register" class="teal-text regular">I do not have an account</a>
 						</div>
 					</div>
 				</form>
