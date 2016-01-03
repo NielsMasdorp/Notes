@@ -36,6 +36,38 @@ router.post('/notes', auth, function(req, res, next) {
   });
 });
 
+router.put('/notes', auth, function(req, res, next) {
+
+  Note.findById(req.body._id, function(err, note) {
+    if(err){ return next(err); }
+    if (!note) {
+      return next(new Error('Could not load Note'));
+    } else {
+      note.title = req.body.title;
+      note.body = req.body.body;
+      note.taskList = req.body.taskList;
+
+      note.save(function(err, note) {
+        if (err)
+          return res.status(400).json({message: 'Something went wrong.'});
+        else
+          return res.json(note);
+      });
+    }
+  });
+});
+
+router.delete('/notes', auth, function(req, res, next) {
+
+ Note.where().findOneAndRemove(req.param.id, function(err) {
+    if(err) { 
+      return next(err); 
+    } else {
+      return res.status(200).json({message: 'Note removed.'});
+    }
+  });
+});
+
 router.post('/register', function(req, res, next){
   if(!req.body.username || !req.body.password){
     return res.status(400).json({message: 'Please fill out all fields'});

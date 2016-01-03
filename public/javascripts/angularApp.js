@@ -118,8 +118,8 @@ app.factory('notes', ['$http', 'auth', function($http, auth){
       headers: {Authorization: 'Bearer ' + auth.getToken()}
     });
   };
-  o.delete = function(note) {
-    return $http.delete('/notes', note, {
+  o.deleteNote = function(note) {
+    return $http.delete('/notes?id=' + note._id, {
       headers: {Authorization: 'Bearer ' + auth.getToken()}
     });
   };
@@ -131,12 +131,14 @@ app.controller('MainCtrl', [
 	function($scope, $location, notes, auth){
 
     $scope.newNote = {'type' : 0, 'title' : '', 'body' : '', 'tasks' : [{'id' : 0, 'task' : ''}]};
+    $scope.loading = 1;
 
     var init = function() {
       //TODO: fix better way to retrieve notes
       notes.getAll().success(function(data){
         angular.copy(data, notes.notes);
         $scope.notes = notes.notes;
+        $scope.loading--;
       });;
       //styling for the tabs
       $('ul.tabs').tabs();
@@ -209,9 +211,8 @@ app.controller('MainCtrl', [
     };
 
     $scope.deleteNote = function(note) {
-      notes.delete(note).success(function(data){
-        //note is deleted!
-        //remove note from list
+      notes.deleteNote(note).success(function(data){
+        //note is deleted, remove from list
         var index = notes.notes.indexOf(note);
         if (index > -1) {
           notes.notes.splice(index, 1);
