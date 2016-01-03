@@ -1,4 +1,4 @@
-var app = angular.module('notes', ['ui.router']);
+var app = angular.module('notes', ['ui.router', 'angularMoment']);
 
 app.config([
   '$stateProvider',
@@ -10,11 +10,17 @@ app.config([
       url: '/home',
       templateUrl: '/home.html',
       controller: 'MainCtrl',
-      resolve: {
-        notesPromise: ['notes', function(notes){
-          return notes.getAll();
-        }]
-      }
+      //TODO: fix this
+      // resolve: {
+      //   notesPromise: ['notes', function(notes){
+      //     return notes.getAll();
+      //   }]
+      // },
+      onEnter: ['$state', 'auth', function($state, auth){
+        if(!auth.isLoggedIn()){
+          $state.go('login');
+        }
+      }]
     })
     .state('login', {
       url: '/login',
@@ -86,6 +92,8 @@ app.factory('auth', ['$http', '$window', function($http, $window){
 
   auth.logOut = function(){
     $window.localStorage.removeItem('notes-token');
+    //back to login
+    $window.location.replace('/#/login');
   };
 
   return auth;
@@ -113,18 +121,32 @@ app.factory('notes', ['$http', 'auth', function($http, auth){
 }]);
 
 app.controller('MainCtrl', [
-	'$scope', 'notes', 'auth',
-	function($scope, notes){
+	'$scope', '$location', 'notes', 'auth',
+	function($scope, $location, notes, auth){
 
-		$scope.notes = notes.notes;
+    $scope.tasks = [{'id' : 1, 'task' : ''}];
+
+    var init = function() {
+      //TODO: fix better way to retrieve notes
+      notes.getAll();
+      $scope.notes = notes.notes;
+      //for the tabs
+      $('ul.tabs').tabs();
+      $('.indicator').css("background-color","#9E9E9E");
+
+    };
+    init();
 
 		$scope.addNote = function(){
       console.log('adding note: ' + $scope.body)
-			if(!$scope.body || $scope.body === '') { return; }
+			if(!$scope.body || $scope.body === '' || !$scope.title || $scope.title === '') { return; }
 			notes.create({
+        title: $scope.title,
         body: $scope.body
       });
+      $scope.title = '';
       $scope.body = '';
+      Materialize.toast('Note added!', 4000);
     };
   }]);
 

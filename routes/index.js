@@ -21,7 +21,8 @@ router.get('/notes', auth, function(req, res, next) {
 });
 
 router.post('/notes', auth, function(req, res, next) {
-  var note = new Note(req.body);
+  var note = new Note(req.body, req.title);
+  note.title = req.title;
   note.author = req.payload.username;
 
   note.save(function(err, note){
