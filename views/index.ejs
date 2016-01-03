@@ -101,7 +101,7 @@
 					<li class="tab col s3"><a href class="grey-text" ng-click="changeCategory(4)">Money</a></li>
 				</ul>
 			</div>
-			<div class="col s12 m3" ng-repeat="note in notes | orderBy:'-date'">
+			<div class="col s12 m3" ng-repeat="note in filtered = ( notes | orderBy:'-date' | filter: {category : selectedCategory} )">
 				<div class="card hoverable yellow">
 					<div class="card-content grey-text">
 						<span class="card-title grey-text">{{note.title}}</span>
@@ -131,9 +131,9 @@
 					</div>
 				</div>
 			</div>
-			<div class="col s12 m4 offset-m4" ng-show="notes.length == 0">
+			<div class="col s12 m8 offset-m2" ng-show="filtered.length == 0">
 				<div class="card-panel hoverable green lighten-2 white-text">
-					Go ahead, add your first note!
+					No notes in this category, go add one!
 				</div>
 			</div>
 		</div>
