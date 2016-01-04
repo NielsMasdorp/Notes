@@ -152,6 +152,7 @@ app.controller('MainCtrl', [
         $scope.loading--;
       });;
       //styling for the tabs
+      //TODO this should be in base.js
       $('ul.tabs').tabs();
       $('.indicator').css("background-color","#616161");
     };
@@ -244,14 +245,6 @@ app.controller('MainCtrl', [
         //Something went wrong while deleting note
         Materialize.toast('Something went wrong , try again later!', 4000);
       });
-    };
-
-    $scope.editNote = function(note) {
-      if (note.editing) {
-        note.editing = false;
-      } else  {
-        note.editing = true;
-      }
     };
 
     $scope.getNoteClass = function(note) {
