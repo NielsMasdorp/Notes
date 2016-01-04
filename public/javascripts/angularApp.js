@@ -130,7 +130,7 @@ app.controller('MainCtrl', [
 	'$scope', '$location', 'notes', 'auth',
 	function($scope, $location, notes, auth){
 
-    //blank note object for creation
+    //blank note object for creation of new note
     $scope.newNote = {
       'type' : 0, 
       'title' : '', 
@@ -143,9 +143,10 @@ app.controller('MainCtrl', [
       }]
     };
     $scope.selectedCategory = 0;
-    $scope.loading = 1;
+    $scope.loading = 0;
 
     var init = function() {
+      $scope.loading++;
       notes.getAll().success(function(data){
         angular.copy(data, notes.notes);
         $scope.notes = notes.notes;
@@ -162,10 +163,22 @@ app.controller('MainCtrl', [
       $scope.newNote.tasks.push({'id' : $scope.newNote.tasks.length, 'task' : ''});
     };
 
+    $scope.addTask = function(note) {
+      note.taskList.push({'id' :  note.taskList.length, 'task' : ''});
+    };
+
     $scope.deleteTask = function(task) {
       var index = $scope.newNote.tasks.indexOf(task);
       if (index > -1) {
           $scope.newNote.tasks.splice(index, 1);
+      }
+    };
+
+    $scope.deleteTask = function(note, task) {
+      var index = note.taskList.indexOf(task);
+      if (index > -1) {
+         console.log('hello')
+          note.taskList.splice(index, 1);
       }
     };
 
@@ -220,6 +233,7 @@ app.controller('MainCtrl', [
     $scope.updateNote = function(note) {
       notes.update(note).success(function(data){
         //note is updated!
+        note.date = data.date;
       })
       .error(function(data){
         //remove note from list and populate again 
@@ -241,7 +255,7 @@ app.controller('MainCtrl', [
       }
     };
 
-    $scope.deleteNote = function(note) {
+   $scope.deleteNote = function(note) {
       notes.deleteNote(note).success(function(data){
         //note is deleted, remove from list
         var index = notes.notes.indexOf(note);
@@ -249,7 +263,7 @@ app.controller('MainCtrl', [
           notes.notes.splice(index, 1);
         }
         Materialize.toast('Note deleted!', 4000);
-      })
+      }) 
       .error(function(data){
         //Something went wrong while deleting note
         Materialize.toast('Something went wrong , try again later!', 4000);

@@ -73,10 +73,10 @@
 							</div>
 							<div id="list-note" class="col s12">
 								<div ng-repeat="task in newNote.tasks" ng-attr-id="{{ 'task-' + task.id }}">
-								<div class="input-field">
-         							<i href ng-if="$index > 0" ng-click="deleteTask(task)" class="material-icons prefix grey-text text-darken-2">delete</i>
-          							<input placeholder="Write a task.." ng-model="task.task"/>	
-        						</div>					
+									<div class="input-field">
+         								<i href ng-if="$index > 0" ng-click="deleteTask(task)" class="material-icons prefix grey-text text-darken-2">delete</i>
+          								<input placeholder="Write a task.." ng-model="task.task"/>	
+        							</div>					
 								</div>
 								<div class="col s12 right-align">
 									<a href ng-click="addTask()" class="grey-text text-darken-2 light">Add task</a>
@@ -126,10 +126,21 @@
 						<input class="card-title grey-text text-darken-2" ng-show="note.editing"  placeholder="Title" ng-model="note.title" type="text">
 						<p ng-if="note.noteType == 0 && !note.editing" class="grey-text text-darken-2 note-body">{{note.body}}</p>
 						<textarea id="editbody" ng-if="note.noteType == 0 && note.editing" class="materialize-textarea" placeholder="Content" ng-model="note.body"></textarea>
-    					<p ng-if="note.noteType == 1" ng-repeat="task in note.taskList" class="grey-text text-darken-2">
+    					<p ng-if="note.noteType == 1 && !note.editing" ng-repeat="task in note.taskList" class="grey-text text-darken-2">
       						<input ng-model="task.finished" ng-change="updateNote(note)" type="checkbox" id="{{ 'task-' + task._id }}" />
       						<label class="grey-text text-darken-2" for="{{ 'task-' + task._id }}">{{task.task}}</label>
-    					</p>	
+    					</p>
+    					<div ng-if="note.noteType == 1 && note.editing">
+							<div ng-repeat="task in note.taskList" ng-attr-id="{{ 'note-task-' + task.id }}">
+								<div class="input-field">
+         							<i href ng-if="$index > 0" ng-click="deleteTask(note, task)" class="material-icons prefix grey-text text-darken-2">delete</i>
+          							<input placeholder="Write a task.." ng-model="task.task"/>	
+        						</div>					
+							</div>
+							<div class="col s12 right-align">
+								<a href ng-click="addTask(note)" class="grey-text text-darken-2 light">Add task</a>
+							</div>
+						</div>
 						<h6 class="light grey-text text-darken-2" am-time-ago="note.date"></h6>
 					</div>
 					<div class="card-action">
