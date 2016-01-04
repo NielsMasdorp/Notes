@@ -1,0 +1,26 @@
+{
+  "name": "notes",
+  "homepage": "https://github.com/NielsMasdorp/notes",
+  "authors": [
+    "NielsMasdorp <nielsmasdorp@gmail.com>"
+  ],
+  "description": "sum good shit",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "Materialize": "materialize#~0.97.5",
+    "angular-moment": "^0.10.3",
+    "moment": "^2.11.0",
+    "jquery": "2.1.4",
+    "angular-ui-router": "~0.2.15"
+  }
+}

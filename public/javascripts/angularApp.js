@@ -232,6 +232,15 @@ app.controller('MainCtrl', [
       });
     };
 
+     $scope.edit = function(note) {
+      if (!note.editing) {
+        note.editing = true;
+      } else {
+        note.editing = false;
+        $scope.updateNote(note);
+      }
+    };
+
     $scope.deleteNote = function(note) {
       notes.deleteNote(note).success(function(data){
         //note is deleted, remove from list
