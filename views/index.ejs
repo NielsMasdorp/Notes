@@ -132,8 +132,8 @@
     					<p ng-if="note.noteType == 1 && !note.editing" 
     						ng-repeat="task in note.taskList" class="grey-text text-darken-2">
       						<input ng-model="task.finished" ng-change="updateNote(note)" 
-      						type="checkbox" id="{{ 'task-' + task.id }}" />
-      						<label class="grey-text text-darken-2" for="{{ 'task-' + task.id }}">{{task.task}}</label>
+      						type="checkbox" id="{{ 'note-' + note._id + 'task-' + task.id }}" />
+      						<label class="grey-text text-darken-2" for="{{ 'note-' + note._id + 'task-' + task.id }}">{{task.task}}</label>
     					</p>
     					<div ng-if="note.noteType == 1 && note.editing">
 							<div ng-repeat="task in note.taskList" ng-attr-id="{{ 'note-task-' + task.id }}">
