@@ -3,15 +3,19 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var passport = require('passport');
 var User = mongoose.model('User');
+var Note = mongoose.model('Note');
 var jwt = require('express-jwt');
 var auth = jwt({secret: 'SECRET', userProperty: 'payload'});
 
-/* GET home page. */
+/* GET notes application. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Notes' });
 });
 
-var Note = mongoose.model('Note');
+/* GET landing page. */
+router.get('/home', function(req, res, next) {
+  res.render('home', { title: 'Notes' });
+});
 
 router.get('/notes', auth, function(req, res, next) {
   Note.find({'author': req.payload.username}, function(err, notes){

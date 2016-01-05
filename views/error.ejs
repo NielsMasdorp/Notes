@@ -1,3 +1,42 @@
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+  <title>404 Not found</title>
+
+ <!--Import Google Icon Font-->
+  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+  <link type="text/css" rel="stylesheet" href="/bower_components/Materialize/dist/css/materialize.min.css"  media="screen,projection"/>
+</head>
+<body>
+  <nav class="yellow lighten-2" role="navigation">
+    <div class="nav-wrapper container">
+      <a id="logo-container" href class="brand-logo grey-text text-darken-3">Notes</a>
+    </div>
+  </nav>
+
+  <div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <br><br>
+        <h1 class="header center teal-text text-lighten-2">Oops!</h1>
+        <div class="row center">
+          <h5 class="grey-text text-darken-2 header col s12 light">The resource you requested appears to be unavailable!</h5>
+        </div>
+        <div class="row center">
+          <a href="/home" id="download-button" class="btn-large waves-effect waves-light teal lighten-1">Back to home</a>
+        </div>
+        <br><br>
+
+      </div>
+    </div>
+  </div>
+
+  <!--  Scripts-->
+  <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="/bower_components/Materialize/dist/js/materialize.min.js"></script>
+
+  </body>
+</html>
