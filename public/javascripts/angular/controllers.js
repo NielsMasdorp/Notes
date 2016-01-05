@@ -20,6 +20,7 @@ app.controller('MainCtrl', [
     var init = function() {
       initTabs();
       $scope.loading++;
+      //get all notes from service
       notes.getAll().success(function(data){
         angular.copy(data, notes.notes);
         $scope.notes = notes.notes;
@@ -28,22 +29,26 @@ app.controller('MainCtrl', [
     };
     init();
 
-    $scope.addTask = function() {
+    //Add a new task to the to-be-made note.
+    $scope.addTaskToNewNote = function() {
       $scope.newNote.tasks.push({'id' : $scope.newNote.tasks.length, 'task' : ''});
     };
 
-    $scope.addTask = function(note) {
+    //Add a new task to the note that is being edited.
+    $scope.addTaskToNote = function(note) {
       note.taskList.push({'id' :  note.taskList.length, 'task' : ''});
     };
 
-    $scope.deleteTask = function(task) {
+    //Delete a task from the to-be-made note.
+    $scope.deleteTaskFromNewNote = function(task) {
       var index = $scope.newNote.tasks.indexOf(task);
       if (index > -1) {
           $scope.newNote.tasks.splice(index, 1);
       }
     };
 
-    $scope.deleteTask = function(note, task) {
+    //Delete a task from the notw that is being edited.
+    $scope.deleteTaskFromNote = function(note, task) {
       var index = note.taskList.indexOf(task);
       if (index > -1) {
          console.log('hello')
@@ -51,18 +56,23 @@ app.controller('MainCtrl', [
       }
     };
 
+    //Change the note type of the to-be-made note.
     $scope.changeNoteType = function(type){
         $scope.newNote.type = type;
         if (type === 0) {
+          //reset the tasks since the note is now a text-only note.
           $scope.newNote.tasks = [{'id' : 0, 'task' : ''}];
         } else {
+          //reset the body since the note is now a checklist note.
           $scope.newNote.body = '';
         }
     };
 
+    //Add note
 		$scope.addNote = function(){
+      //What note type are we creating?
       $scope.newNote.category = $scope.selectedCategory;
-      //check if new note is valid
+      //check if new note is valid for the selected category.
       if ($scope.newNote.type === 0) {
 			   if(!$scope.newNote.body || $scope.newNote.body === '' || !$scope.newNote.title || $scope.newNote.title === '') {
           return; 
@@ -96,17 +106,17 @@ app.controller('MainCtrl', [
       $scope.newNote.body = '';
       $scope.newNote.color = 0;
       $scope.newNote.tasks = [{'id' : 0, 'task' : ''}];
-      console.log('added');
       showMessage('Note added!');
     };
 
+    //Update a note
     $scope.updateNote = function(note) {
       notes.update(note).success(function(data){
-        //note is updated!
-        note.date = data.date;
+        //note is updated, we don't have to do anything!
       })
       .error(function(data){
-        //remove note from list and populate again 
+        //Something went wrong, the data in the view is not the same as the data in the DB anymore
+        //so we remove note from list and populate again 
         var index = notes.notes.indexOf(note);
         if (index > -1) {
           notes.notes.splice(index, 1);
@@ -116,18 +126,31 @@ app.controller('MainCtrl', [
       });
     };
 
-     $scope.edit = function(note) {
+    //Turn on editing mode for a note
+    $scope.edit = function(note) {
       if (!note.editing) {
         note.editing = true;
+        //toggleCenter(note);
       } else {
         note.editing = false;
+        //If this is a checklist task, remove all empty checklists except the first
+        if (note.noteType == 1) {
+          note.taskList.forEach(function(task){
+            var index = note.taskList.indexOf(task);
+            if (index > 0 && task.task === '') {
+               note.taskList.splice(index, 1);
+            }
+          });
+        }
+        //Done editing the note, we should probably update it in the database.
         $scope.updateNote(note);
       }
     };
 
-   $scope.deleteNote = function(note) {
+    //Delete a note
+    $scope.deleteNote = function(note) {
       notes.deleteNote(note).success(function(data){
-        //note is deleted, remove from list
+        //note is deleted, remove from view data
         var index = notes.notes.indexOf(note);
         if (index > -1) {
           notes.notes.splice(index, 1);
@@ -140,6 +163,7 @@ app.controller('MainCtrl', [
       });
     };
 
+    //Get the class for the panels depending on the note color.
     $scope.getNoteClass = function(note) {
       var colors = ['yellow', 'green', 'blue', 'red', 'indigo', 'purple', 'teal'];
       return 'card hoverable ' + colors[note.color] + '  lighten-3';

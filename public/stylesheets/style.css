@@ -10,7 +10,7 @@
 	cursor: pointer;
 }
 
-.preloader-wrapper {
+.center {
 	position: fixed;
 	z-index: 999;
 	overflow: show;
@@ -21,13 +21,21 @@
 	right: 0;
 }
 
-@media only screen and (max-width: 992px) {
-	#hamburger {
-		padding-left: 16px;
-	}
-	#brand {
-		padding-left: 0px;
-	}
+/* input placeholders */
+.note-container *::-webkit-input-placeholder {
+    color: #9e9e9e;
+}
+.note-container *:-moz-placeholder {
+    /* FF 4-18 */
+    color: #9e9e9e;
+}
+.note-container*::-moz-placeholder {
+    /* FF 19+ */
+    color: #9e9e9e;
+}
+.note-container *:-ms-input-placeholder {
+    /* IE 10+ */
+    color: #9e9e9e;
 }
 
 .note-container {
@@ -80,5 +88,14 @@
 		-webkit-column-count: 3;
 		-moz-column-count: 3;
 		column-count: 3;
+	}
+}
+
+@media only screen and (max-width: 992px) {
+	#hamburger {
+		padding-left: 16px;
+	}
+	#brand {
+		padding-left: 0px;
 	}
 }
