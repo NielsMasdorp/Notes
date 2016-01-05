@@ -1,3 +1,18 @@
+body.overlay:after {
+	content: '';
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(255, 255, 255, 0.5);
+	z-index: 9998;
+}
+
+body.overlay {
+	overflow: hidden;
+}
+
 #brand {
 	padding-left: 32px;
 }
@@ -10,7 +25,12 @@
 	cursor: pointer;
 }
 
-.center {
+input, textarea {
+	outline: 0;
+}
+
+/* loading spinner */
+.loading {
 	position: fixed;
 	z-index: 999;
 	overflow: show;
@@ -20,6 +40,23 @@
 	bottom: 0;
 	right: 0;
 }
+/* end: loading spinner */
+
+/* centered card when editing */
+.centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  max-height: 90%;
+  z-index: 9999;
+  overflow-y: auto;
+  -webkit-transform: translate(-50%, -50%);
+   -moz-transform: translate(-50%, -50%);
+   -ms-transform: translate(-50%, -50%);
+   -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+/* end: centered card when editing */
 
 /* input placeholders */
 .note-container *::-webkit-input-placeholder {
@@ -37,7 +74,9 @@
     /* IE 10+ */
     color: #9e9e9e;
 }
+/* end: input placeholders */
 
+/* note container */
 .note-container {
 	-webkit-column-break-inside:avoid;
 	moz-column-break-inside:avoid;
@@ -68,12 +107,17 @@
 .note-container .card {
 	padding: 0; 
 }
+/* end: note container */
 
+/* media queries */
 @media only screen and (max-width: 600px) {
 	.note-container {
 		-webkit-column-count: 1;
 		-moz-column-count: 1;
 		column-count: 1;
+	}
+	.centered {
+		width: 96%;
 	}
 }
 @media only screen and (min-width: 601px) {
@@ -82,12 +126,18 @@
 		-moz-column-count: 2;
 		column-count: 2;
 	}
+	.centered {
+		width: 50%;
+	}
 }
 @media only screen and (min-width: 993px) {
 	.note-container {
 		-webkit-column-count: 3;
 		-moz-column-count: 3;
 		column-count: 3;
+	}
+	.centered {
+		width: 25%;
 	}
 }
 
@@ -99,3 +149,4 @@
 		padding-left: 0px;
 	}
 }
+/* end: media queries */

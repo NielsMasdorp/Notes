@@ -130,7 +130,6 @@ app.controller('MainCtrl', [
     $scope.edit = function(note) {
       if (!note.editing) {
         note.editing = true;
-        //toggleCenter(note);
       } else {
         note.editing = false;
         //If this is a checklist task, remove all empty checklists except the first
@@ -166,7 +165,8 @@ app.controller('MainCtrl', [
     //Get the class for the panels depending on the note color.
     $scope.getNoteClass = function(note) {
       var colors = ['yellow', 'green', 'blue', 'red', 'indigo', 'purple', 'teal'];
-      return 'card hoverable ' + colors[note.color] + '  lighten-3';
+
+      return 'card ' + colors[note.color] + '  lighten-3 ' + (note.editing? ' centered' : ' hoverable');
     };
 
     var showMessage = function(message) {

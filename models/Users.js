@@ -20,6 +20,7 @@ UserSchema.methods.validPassword = function(password) {
   return this.hash === hash;
 };
 
+//TODO store secret in enviroment variable
 UserSchema.methods.generateJWT = function() {
 
   // set expiration to 60 days
