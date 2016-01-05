@@ -18,16 +18,13 @@ app.controller('MainCtrl', [
     $scope.loading = 0;
 
     var init = function() {
+      initTabs();
       $scope.loading++;
       notes.getAll().success(function(data){
         angular.copy(data, notes.notes);
         $scope.notes = notes.notes;
         $scope.loading--;
       });;
-      //styling for the tabs
-      //TODO this should be in base.js
-      $('ul.tabs').tabs();
-      $('.indicator').css("background-color","#616161");
     };
     init();
 
@@ -99,7 +96,8 @@ app.controller('MainCtrl', [
       $scope.newNote.body = '';
       $scope.newNote.color = 0;
       $scope.newNote.tasks = [{'id' : 0, 'task' : ''}];
-      Materialize.toast('Note added!', 4000);
+      console.log('added');
+      showMessage('Note added!');
     };
 
     $scope.updateNote = function(note) {
@@ -114,7 +112,7 @@ app.controller('MainCtrl', [
           notes.notes.splice(index, 1);
         }
         notes.notes.push(data);
-        Materialize.toast('Something went wrong , try again later!', 4000);
+        showMessage('Something went wrong , try again later!');
       });
     };
 
@@ -138,37 +136,18 @@ app.controller('MainCtrl', [
       }) 
       .error(function(data){
         //Something went wrong while deleting note
-        Materialize.toast('Something went wrong , try again later!', 4000);
+        showMessage('Something went wrong , try again later!');
       });
     };
 
     $scope.getNoteClass = function(note) {
-      var color = '';
-      switch (note.color) {
-        case 0:
-          color = 'yellow lighten-3';
-          break;
-        case 1:
-          color = 'green lighten-3';
-          break;
-        case 2:
-          color = 'blue lighten-3';
-          break;
-        case 3:
-          color = 'red lighten-3';
-          break;
-        case 4:
-          color = 'indigo lighten-3';
-          break;
-        case 5:
-          color = 'purple lighten-3';
-          break;
-        case 6:
-          color = 'teal lighten-3';
-          break;
-      }
-      return 'card hoverable ' + color;
+      var colors = ['yellow', 'green', 'blue', 'red', 'indigo', 'purple', 'teal'];
+      return 'card hoverable ' + colors[note.color] + '  lighten-3';
     };
+
+    var showMessage = function(message) {
+      Materialize.toast(message, 4000);
+    }
 
   }]);
 
