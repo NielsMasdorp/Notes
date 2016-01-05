@@ -150,8 +150,8 @@
 						<h6 class="light grey-text text-darken-2" am-time-ago="note.date"></h6>
 					</div>
 					<div class="card-action">
-						<a class="grey-text text-darken-2" href ng-click="note.editing = !note.editing; $root.overlay = note.editing;"><i class="material-icons">mode_edit</i></a>
-						<a class="grey-text text-darken-2" href ng-click="deleteNote(note)"><i class="material-icons">delete</i></a>
+						<a class="grey-text text-darken-2" href ng-click="edit(note); $root.overlay = note.editing;"><i class="material-icons">mode_edit</i></a>
+						<a class="grey-text text-darken-2" href ng-click="$root.overlay = false; deleteNote(note)"><i class="material-icons">delete</i></a>
 					</div>
 				</div>
 			</div>

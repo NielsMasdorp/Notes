@@ -73,23 +73,21 @@ app.controller('MainCtrl', [
       //What note type are we creating?
       $scope.newNote.category = $scope.selectedCategory;
       //check if new note is valid for the selected category.
+      if (!$scope.newNote.title || $scope.newNote.title === '') {
+        showMessage('Please pick a title.');
+        return; 
+      }
+			if($scope.newNote.type === 0 && (!$scope.newNote.body || $scope.newNote.body === '')) {
+        showMessage('Please pick a body.');
+        return; 
+      } 
+      //reset unneccesary values
       if ($scope.newNote.type === 0) {
-			   if(!$scope.newNote.body || $scope.newNote.body === '' || !$scope.newNote.title || $scope.newNote.title === '') {
-          return; 
-        }
         $scope.newNote.tasks = [];
       } else {
-        //remove empty tasks
-        $scope.newNote.tasks.forEach(function(task){
-            var index = $scope.newNote.tasks.indexOf(task);
-            if (index > 0 && task.task === '') {
-               $scope.newNote.tasks.splice(index, 1);
-            }
-        });
-        if(($scope.newNote.tasks.length === 1 && $scope.newNote.tasks[0].task === '') || !$scope.newNote.title || $scope.newNote.title === '') {
-          return; 
-        }
+         $scope.newNote.body = '';
       }
+      
       //create node
 			notes.create({
         noteType: $scope.newNote.type,
@@ -128,22 +126,9 @@ app.controller('MainCtrl', [
 
     //Turn on editing mode for a note
     $scope.edit = function(note) {
-      if (!note.editing) {
-        note.editing = true;
-      } else {
-        note.editing = false;
-        //If this is a checklist task, remove all empty checklists except the first
-        if (note.noteType == 1) {
-          note.taskList.forEach(function(task){
-            var index = note.taskList.indexOf(task);
-            if (index > 0 && task.task === '') {
-               note.taskList.splice(index, 1);
-            }
-          });
-        }
+        note.editing = !note.editing;
         //Done editing the note, we should probably update it in the database.
         $scope.updateNote(note);
-      }
     };
 
     //Delete a note
