@@ -125,10 +125,10 @@
        			<div id="{{ 'card-' + note._id }}" ng-class="getNoteClass(note)">
 					<div class="card-content">
 						<span ng-hide="note.editing" class="card-title truncate grey-text text-darken-2">{{note.title}}</span>
-						<input class="card-title grey-text text-darken-2" ng-show="note.editing"  placeholder="Title" ng-model="note.title" type="text">
+						<input class="card-title grey-text text-darken-2" ng-change="note.changed = true" ng-show="note.editing"  placeholder="Title" ng-model="note.title" type="text">
 						<div class="note-body">
 						<p ng-if="note.noteType == 0 && !note.editing" class="grey-text text-darken-2 note-body">{{note.body}}</p>
-						<textarea id="editbody" ng-if="note.noteType == 0 && note.editing" class="grey-text text-darken-2 materialize-textarea" placeholder="Content" ng-model="note.body"></textarea>
+						<textarea id="editbody" ng-if="note.noteType == 0 && note.editing" class="grey-text text-darken-2 materialize-textarea" placeholder="Content" ng-change="note.changed = true" ng-model="note.body"></textarea>
     					<p ng-if="note.noteType == 1 && !note.editing" 
     						ng-repeat="task in note.taskList" class="grey-text text-darken-2">
       						<input ng-model="task.finished" ng-change="updateNote(note)" 
@@ -139,7 +139,7 @@
 							<div ng-repeat="task in note.taskList" ng-attr-id="{{ 'note-task-' + task.id }}">
 								<div class="input-field">
          							<i href ng-if="$index > 0" ng-click="deleteTaskFromNote(note, task)" class="material-icons prefix grey-text text-darken-2">delete</i>
-          							<input class="grey-text text-darken-2" placeholder="{{ 'Item ' + ($index + 1) }}" ng-model="task.task"/>	
+          							<input class="grey-text text-darken-2" ng-change="note.changed = true" placeholder="{{ 'Item ' + ($index + 1) }}" ng-model="task.task"/>	
         						</div>
 							</div>
 							<div class="col s12 right-align">
@@ -150,7 +150,8 @@
 						<h6 class="light grey-text text-darken-2" am-time-ago="note.date">
 					</div>
 					<div class="card-action">
-						<a class="grey-text text-darken-2" href scroll-to-after-edit ng-click="edit(note); $root.overlay = note.editing;"><i class="material-icons">mode_edit</i></a>
+						<a scroll-to-after-edit class="grey-text text-darken-2" 
+						href ng-click="edit(note); $root.overlay = note.editing;"><i class="material-icons">mode_edit</i></a>
 						<a class="grey-text text-darken-2" href ng-click="$root.overlay = false; deleteNote(note)"><i class="material-icons">delete</i></a>
 					</div>
 				</div>
@@ -273,7 +274,6 @@
 	<script src="/javascripts/angular/angularApp.js"></script>
 	<script src="/javascripts/angular/services.js"></script>
 	<script src="/javascripts/angular/controllers.js"></script>
-	<script src="/javascripts/angular/directives.js"></script>
 	<script src="/javascripts/base.js"></script>
 </body>
 </html>

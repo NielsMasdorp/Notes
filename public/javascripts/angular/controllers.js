@@ -16,7 +16,6 @@ app.controller('MainCtrl', [
     };
     $scope.selectedCategory = 0;
     $scope.loading = 0;
-    $scope.editingNote = false;
 
     var init = function() {
       initTabs();
@@ -99,6 +98,8 @@ app.controller('MainCtrl', [
         taskList: $scope.newNote.tasks
       }).success(function(data){
         notes.notes.push(data);
+        //animate to added note
+        scrollToTopOfNotes();
       });
       //reset values
       $scope.newNote.title = '';
@@ -129,10 +130,11 @@ app.controller('MainCtrl', [
     //Turn on editing mode for a note
     $scope.edit = function(note) {
       note.editing = !note.editing;
-      $scope.editingNote = note.editing;
       //Done editing the note, we should probably update it in the database.
-      if (!note.editing) {
+      if (!note.editing && note.changed) {
         $scope.updateNote(note);
+        note.changed = false;
+        scrollToTopOfNotes();
       }
     };
 
