@@ -126,9 +126,11 @@ app.controller('MainCtrl', [
 
     //Turn on editing mode for a note
     $scope.edit = function(note) {
-        note.editing = !note.editing;
-        //Done editing the note, we should probably update it in the database.
+      note.editing = !note.editing;
+      //Done editing the note, we should probably update it in the database.
+      if (!note.editing) {
         $scope.updateNote(note);
+      }
     };
 
     //Delete a note

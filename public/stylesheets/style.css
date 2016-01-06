@@ -13,6 +13,10 @@ body.overlay {
 	overflow: hidden;
 }
 
+body {
+	 font-family: monospace !important;
+}
+
 #brand {
 	padding-left: 32px;
 }
