@@ -16,6 +16,7 @@ app.controller('MainCtrl', [
     };
     $scope.selectedCategory = 0;
     $scope.loading = 0;
+    $scope.editingNote = false;
 
     var init = function() {
       initTabs();
@@ -110,7 +111,8 @@ app.controller('MainCtrl', [
     //Update a note
     $scope.updateNote = function(note) {
       notes.update(note).success(function(data){
-        //note is updated, we don't have to do anything!
+        //note is updated, we only have to tell the view the new date
+        note.date = data.date;
       })
       .error(function(data){
         //Something went wrong, the data in the view is not the same as the data in the DB anymore
@@ -127,6 +129,7 @@ app.controller('MainCtrl', [
     //Turn on editing mode for a note
     $scope.edit = function(note) {
       note.editing = !note.editing;
+      $scope.editingNote = note.editing;
       //Done editing the note, we should probably update it in the database.
       if (!note.editing) {
         $scope.updateNote(note);

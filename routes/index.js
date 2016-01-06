@@ -52,6 +52,7 @@ router.put('/notes', auth, function(req, res, next) {
       note.title = req.body.title;
       note.body = req.body.body;
       note.taskList = req.body.taskList;
+      note.date = new Date();
 
       note.save(function(err, note) {
         if (err)
