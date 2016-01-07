@@ -120,7 +120,7 @@
 				</ul>
 			</div>
 		</div>
-  		<div class="row note-container" ng-show="loading == 0">
+  		<div class="note-container" ng-show="loading == 0">
   			<div class="note" ng-repeat="note in filtered = ( notes | orderBy:'-date' | filter: {category : selectedCategory} )">
        			<div id="{{ 'card-' + note._id }}" ng-class="getNoteClass(note)">
 					<div class="card-content">
@@ -143,7 +143,7 @@
         						</div>
 							</div>
 							<div class="col s12 right-align">
-								<a href ng-click="addTaskToNote(note)" class="grey-text text-darken-2 light">Add item</a>
+								<a href ng-click="addTaskToNote(note); note.changed = true" class="grey-text text-darken-2 light">Add item</a>
 							</div>
 						</div>
 						</div>
