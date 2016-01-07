@@ -10,12 +10,6 @@ app.config([
       url: '/home',
       templateUrl: '/home.html',
       controller: 'MainCtrl',
-      //TODO: fix this
-      // resolve: {
-      //   notesPromise: ['notes', function(notes){
-      //     return notes.getAll();
-      //   }]
-      // },
       onEnter: ['$state', 'auth', function($state, auth){
         if(!auth.isLoggedIn()){
           $state.go('login');
