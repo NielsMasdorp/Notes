@@ -3,7 +3,7 @@
 Notes
 ====
 
-This is an application I've created to learn the MEAN stack (AngularJS, NodeJS, Express and MongoDB).
+This is an application I've created to learn the MEAN stack (AngularJS, NodeJS, Express and MongoDB). I've stopped working on this project but there are some issues left open. If you want to play around with it feel free and submit pull requests!
 
 License
 ====
